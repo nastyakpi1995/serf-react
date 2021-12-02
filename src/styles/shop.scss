@@ -31,6 +31,20 @@
 }
 .shop__star-list {
   margin-left: -9px;
+
+  li {
+    opacity: 0.2;
+    padding-right: 5px;
+    cursor: pointer;
+    transition: opacity 1.9ms;
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .isActive {
+    opacity: 1;
+  }
 }
 .shop__slider-price {
   font-weight: 800;

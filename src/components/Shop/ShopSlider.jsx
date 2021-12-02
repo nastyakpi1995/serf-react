@@ -49,6 +49,7 @@ const  ShopSlider = () => {
         1: {0: false, 1: false, 2: false},
         2: {0: false, 1: false, 2: false},
     })
+    const [activeStart, setActiveStart] = useState({0: 3, 1: 2, 2: 1})
     const carouselRef = useRef(null)
     const onChangeActive = (idx, index) => {
         setObjActive(prev => ({
@@ -65,7 +66,12 @@ const  ShopSlider = () => {
     const goToPrevSlide = () => {
       carouselRef.current.prev()
     }
-
+    const onClickStarts = (idx, count) => {
+        setActiveStart(prev => ({
+            ...prev,
+            [idx]: count + 1
+        }))
+    }
     return (
         <div>
             <Arrows goToNextSlide={goToNextSlide} goToPrevSlide={goToPrevSlide} />
@@ -80,11 +86,15 @@ const  ShopSlider = () => {
                             </div>
                             <div className="shop__slider-price">
                                 <ul className="shop__star-list star-list">
-                                    <li><img src={startImg} alt="" /></li>
-                                    <li><img src={startImg} alt="" /></li>
-                                    <li><img src={startImg} alt="" /></li>
-                                    <li><img src={startImg} alt="" /></li>
-                                    <li><img src={startImg} alt="" /></li>
+                                    {Array.from(Array(5)).map((_, index) => (
+                                        <li
+                                            className={classNames({isActive: index < activeStart[idx]})}
+                                            onClick={() => onClickStarts(idx, index)}>
+                                            <img
+                                                src={startImg} alt=""
+                                            />
+                                        </li>
+                                    ))}
                                 </ul>
                                 {item.price} <sup>{item.priceRest}</sup>
                             </div>

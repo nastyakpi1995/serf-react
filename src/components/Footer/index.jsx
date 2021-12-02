@@ -1,6 +1,8 @@
-import React from 'react';
-const  Footer = () => (
-        <div className="footer">
+import React, {useRef} from 'react';
+const  Footer = () =>  {
+    const footerRef = useRef(null)
+    return (
+        <div className="footer" ref={footerRef}>
             <div className="shop-slider__btn">
                 <a className="btn" href="#">
                     Go <span>Surf</span>
@@ -10,7 +12,8 @@ const  Footer = () => (
                 </div>
             </div>
         </div>
-)
+    )
+}
 
 export default Footer;
 
