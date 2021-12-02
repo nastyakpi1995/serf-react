@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 import startImg from '../../public/img/star.svg'
 import surfboardImg from '../../public/img/surfboard.png'
 import waxImg from '../../public/img/wax.png'
@@ -50,6 +50,7 @@ const  ShopSlider = () => {
         2: {0: false, 1: false, 2: false},
     })
     const [activeStart, setActiveStart] = useState({0: 3, 1: 2, 2: 1})
+    const [curActive, setCurActive] = useState({0: -1, 1: -1, 2: -1})
     const carouselRef = useRef(null)
     const onChangeActive = (idx, index) => {
         setObjActive(prev => ({
@@ -66,11 +67,21 @@ const  ShopSlider = () => {
     const goToPrevSlide = () => {
       carouselRef.current.prev()
     }
-    const onClickStarts = (idx, count) => {
+    const onClickActiveStarts = (idx, count) => {
         setActiveStart(prev => ({
             ...prev,
             [idx]: count + 1
         }))
+    }
+    const onClickCurrentStarts = useCallback((idx, count) => {
+        setCurActive(prev => ({
+            ...prev,
+            [idx]: count + 1
+        }))
+    }, [])
+
+    const onClickCurrentStartsLeave = () => {
+        setCurActive({0: -1, 1: -1, 2: -1})
     }
     return (
         <div>
@@ -88,8 +99,11 @@ const  ShopSlider = () => {
                                 <ul className="shop__star-list star-list">
                                     {Array.from(Array(5)).map((_, index) => (
                                         <li
-                                            className={classNames({isActive: index < activeStart[idx]})}
-                                            onClick={() => onClickStarts(idx, index)}>
+                                            key={index}
+                                            onMouseEnter={() => onClickCurrentStarts(idx, index)}
+                                            onMouseLeave={onClickCurrentStartsLeave}
+                                            className={classNames({isActive: curActive[idx] > 0 ? index  < curActive[idx] : index < activeStart[idx]})}
+                                            onClick={() => onClickActiveStarts(idx, index)}>
                                             <img
                                                 src={startImg} alt=""
                                             />
