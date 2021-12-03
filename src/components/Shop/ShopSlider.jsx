@@ -52,21 +52,23 @@ const  ShopSlider = () => {
     const [activeStart, setActiveStart] = useState({0: 3, 1: 2, 2: 1})
     const [curActive, setCurActive] = useState({0: -1, 1: -1, 2: -1})
     const carouselRef = useRef(null)
-    const onChangeActive = (idx, index) => {
+
+    const onChangeActive = useCallback((idx, index) => {
         setObjActive(prev => ({
             ...prev,
             [idx]: {
                 ...prev[idx],
                 [index]: !prev[idx][index]}
         }))
-    }
+    }, [])
 
-    const goToNextSlide = () => {
+    const goToNextSlide = useCallback(() => {
       carouselRef.current.next()
-    }
-    const goToPrevSlide = () => {
+    }, [])
+    const goToPrevSlide = useCallback(() => {
       carouselRef.current.prev()
-    }
+    }, [])
+
     const onClickActiveStarts = (idx, count) => {
         setActiveStart(prev => ({
             ...prev,
@@ -80,9 +82,9 @@ const  ShopSlider = () => {
         }))
     }, [])
 
-    const onClickCurrentStartsLeave = () => {
+    const onClickCurrentStartsLeave = useCallback(() => {
         setCurActive({0: -1, 1: -1, 2: -1})
-    }
+    }, [])
     return (
         <div>
             <Arrows goToNextSlide={goToNextSlide} goToPrevSlide={goToPrevSlide} />

@@ -1,6 +1,5 @@
-import React, {useRef} from 'react';
-const  Footer = () =>  {
-    const footerRef = useRef(null)
+import React from 'react';
+const  Footer = ({footerRef}) =>  {
     return (
         <div className="footer" ref={footerRef}>
             <div className="shop-slider__btn">
